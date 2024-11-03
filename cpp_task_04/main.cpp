@@ -5,10 +5,18 @@
 class GameActor {
 public:
     // Default constructor
-    GameActor() : name("Unnamed Actor") {}
+	GameActor() : name("Unnamed Actor") {}
 
-    // Copy constructor
-    GameActor(const GameActor& other) : name(other.name) {}
+	// Copy constructor
+	GameActor(const GameActor& other) : name(other.name) {}
+
+	// Copy assignment operator
+	GameActor& operator=(const GameActor& other) {
+		if (this != &other) {
+			name = other.name;
+		}
+		return *this;
+	}
 
     // Method to draw the name
     void draw() const {
@@ -77,9 +85,9 @@ int main(void) {
     actors.emplace_back(duplicateGameActor(2)); // New actor created with default constructor
 
     // Create a temporary GameActor for duplication
-    GameActor inst;
-    inst.set_name("Temporary Actor");
-    actors.emplace_back(duplicateGameActor(&inst)); // Duplicate the temporary actor
+    GameActor* inst = new GameActor();
+    inst->set_name("Temporary Actor");
+    actors.emplace_back(duplicateGameActor(inst)); // Duplicate the temporary actor
 
     // Draw all actors
     for (GameActor* actor : actors) {
@@ -88,6 +96,9 @@ int main(void) {
 
     // Clean up allocated memory
     clean();
+
+	// Clean the temporary instance
+    delete inst; // Clean up temporary actor if it was created with new
 
     return 0;
 }
