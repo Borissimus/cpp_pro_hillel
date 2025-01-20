@@ -5,10 +5,12 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Path to Boost as a submodule
-set(BOOST_ROOT "${CMAKE_SOURCE_DIR}/../external/boost")
+set(BOOST_ROOT "${CMAKE_SOURCE_DIR}/../external/boost/dist")
 
 # Integrate Boost through its CMake
-add_subdirectory(${BOOST_ROOT} external/boost-build)
+set(BOOST_LIBRARYDIR "${BOOST_ROOT}/lib")
+set(BOOST_INCLUDEDIR "${BOOST_ROOT}/include")
+set(Boost_NO_SYSTEM_PATHS ON)
 
 # Find Boost using FindBoost module
 find_package(Boost 1.86 REQUIRED COMPONENTS filesystem)
